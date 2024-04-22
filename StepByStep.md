@@ -10,5 +10,5 @@ php artisan migrate
 Create seeder file
 php artisan make:seeder UserSeeder
 
-Volver a reiniciar la BD y ejecutar seeds
-php artisan migrate:fresh --seeds
+Delete DB, create tables and execute seeds
+php artisan migrate:fresh --seed

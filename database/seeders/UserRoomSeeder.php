@@ -15,7 +15,7 @@ class UserRoomSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([
+        DB::table('users_rooms')->insert([
             [
                 'user_id' => 3,
                 'room_id' => 1,
