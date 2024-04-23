@@ -23,6 +23,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//Games
 Route::get('/games', [GameController::class, 'getAllGames']); 
 Route::post('/games', [GameController::class, 'createGame']); 
 Route::put('/games/{id}', [GameController::class, 'updateGameById']); 
