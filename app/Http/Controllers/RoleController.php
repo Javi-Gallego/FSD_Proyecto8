@@ -2,69 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
-class GameController extends Controller
+class RoleController extends Controller
 {
-    public function getAllGames()
+    public function getAllRoles()
     {
         try {
-            $games = Game::all();
+            $roles = Role::all();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Games retrieved successfully',
-                    'data' => $games
+                    'message' => 'Roles retrieved successfully',
+                    'data' => $roles
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Games cant be retrieved',
+                'message' => 'Roles cant be retrieved',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    public function createGame(Request $request)
+    public function createRole(Request $request)
     {
         try {
-            $game = new Game();
+            $role = new Role();
 
             $request->validate([
-                'title' => 'required|max:50',
-                'description' => 'required|max:150',
-                'url_image' => 'required|max:150'
+                'name' => 'required|max:50'
             ]);
-            $game->title = $request->title;
-            $game->description = $request->description;
-            $game->url_image = $request->url_image;
-            $game->save();
+            $role->name = $request->name;
+            $role->save();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Game created successfully',
-                    'data' => $game
+                    'message' => 'Role created successfully',
+                    'data' => $role
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Game cant be created',
+                'message' => 'Role cant be created',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    public function updateGameById($id, Request $request)
+    public function updateRoleById($id, Request $request)
     {
         try {
-            $game = Game::find($id);
+            $role = Role::find($id);
 
-            if (!$game) {
+            if (!$role) {
                 return response()->json(
                     [
                         'success' => false,
@@ -75,66 +71,58 @@ class GameController extends Controller
             }
             
             $request->validate([
-                'title' => 'max:50',
-                'description' => 'max:150',
-                'url_image' => 'max:150'
+                'name' => 'max:50',
             ]);
-
-            if ($request->title) {
-                $game->title = $request->title;
-            }
-            if ($request->description) {
-                $game->description = $request->description;
-            }
-            if ($request->url_image) {
-                $game->url_image = $request->url_image;
+            
+            if ($request->name) {
+                $role->name = $request->name;
             }
 
-            $game->save();
+            $role->save();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Game updated successfully',
-                    'data' => $game
+                    'message' => 'Role updated successfully',
+                    'data' => $role
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Game cant be updated',
+                'message' => 'Role cant be updated',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    public function deleteGameById($id)
+    public function deleteRoleById($id)
     {
         try {
-            $game = Game::find($id);
+            $role = Role::find($id);
 
-            if (!$game) {
+            if (!$role) {
                 return response()->json(
                     [
                         'success' => false,
-                        'message' => 'Game not found',
+                        'message' => 'Role not found',
                         'data' => null
                     ], 404
                 );
             }
-            $game->delete();
+            $role->delete();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Game deleted successfully',
-                    'data' => $game
+                    'message' => 'Role deleted successfully',
+                    'data' => $role
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Games cant be retrieved',
+                'message' => 'Role cant be deleted',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }

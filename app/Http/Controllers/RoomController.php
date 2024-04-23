@@ -2,73 +2,74 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Game;
+use App\Models\Room;
+use Database\Seeders\RoomSeeder;
 use Illuminate\Http\Request;
 
-class GameController extends Controller
+class RoomController extends Controller
 {
-    public function getAllGames()
+    public function getAllRooms()
     {
         try {
-            $games = Game::all();
+            $rooms = Room::all();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Games retrieved successfully',
-                    'data' => $games
+                    'message' => 'Rooms retrieved successfully',
+                    'data' => $rooms
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Games cant be retrieved',
+                'message' => 'Rooms cant be retrieved',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    public function createGame(Request $request)
+    public function createRoot(Request $request)
     {
         try {
-            $game = new Game();
+            $room = new Room();
 
             $request->validate([
                 'title' => 'required|max:50',
                 'description' => 'required|max:150',
                 'url_image' => 'required|max:150'
             ]);
-            $game->title = $request->title;
-            $game->description = $request->description;
-            $game->url_image = $request->url_image;
-            $game->save();
+            $room->title = $request->title;
+            $room->description = $request->description;
+            $room->url_image = $request->url_image;
+            $room->save();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Game created successfully',
-                    'data' => $game
+                    'message' => 'Room created successfully',
+                    'data' => $room
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Game cant be created',
+                'message' => 'Room cant be created',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    public function updateGameById($id, Request $request)
+    public function updateRoomById($id, Request $request)
     {
         try {
-            $game = Game::find($id);
+            $room = Room::find($id);
 
-            if (!$game) {
+            if (!$room) {
                 return response()->json(
                     [
                         'success' => false,
-                        'message' => 'Game not found',
+                        'message' => 'Room not found',
                         'data' => null
                     ], 404
                 );
@@ -79,62 +80,62 @@ class GameController extends Controller
                 'description' => 'max:150',
                 'url_image' => 'max:150'
             ]);
-
+            
             if ($request->title) {
-                $game->title = $request->title;
+                $room->title = $request->title;
             }
             if ($request->description) {
-                $game->description = $request->description;
+                $room->description = $request->description;
             }
             if ($request->url_image) {
-                $game->url_image = $request->url_image;
+                $room->url_image = $request->url_image;
             }
 
-            $game->save();
+            $room->save();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Game updated successfully',
-                    'data' => $game
+                    'message' => 'Room updated successfully',
+                    'data' => $room
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Game cant be updated',
+                'message' => 'Room cant be updated',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }
     }
 
-    public function deleteGameById($id)
+    public function deleteRoomById($id)
     {
         try {
-            $game = Game::find($id);
+            $room = Room::find($id);
 
-            if (!$game) {
+            if (!$room) {
                 return response()->json(
                     [
                         'success' => false,
-                        'message' => 'Game not found',
+                        'message' => 'Room not found',
                         'data' => null
                     ], 404
                 );
             }
-            $game->delete();
+            $room->delete();
 
             return response()->json(
                 [
                     'success' => true,
-                    'message' => 'Game deleted successfully',
-                    'data' => $game
+                    'message' => 'Room deleted successfully',
+                    'data' => $room
                 ], 200
             );
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Games cant be retrieved',
+                'message' => 'Rooms cant be retrieved',
                 'data' => 'Error: ' . $e->getMessage()
             ], 500);
         }
